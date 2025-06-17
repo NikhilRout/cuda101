@@ -1,4 +1,0 @@
-#!/bin/bash
-export CuPBoP_PATH=~/CuPBoP
-export LD_LIBRARY_PATH=$CuPBoP_PATH/build/runtime:$CuPBoP_PATH/build/runtime/threadPool:$LD_LIBRARY_PATH
-exec ./vecadd_um_prefetch "$@"
