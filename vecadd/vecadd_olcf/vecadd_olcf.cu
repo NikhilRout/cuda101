@@ -42,10 +42,10 @@ int main(int argc, char* argv[]){
     //size of each vector (in bytes)
     size_t bytes = N * sizeof(double);
 
-    //Allocating memory on host for host vectors
-    h_a = (double*)malloc(bytes);
-    h_b = (double*)malloc(bytes);
-    h_c = (double*)malloc(bytes);
+    //Allocating pinned memory on host for host vectors
+    cudaMallocHost(&h_a, bytes); //alternatively: h_a = (double*)malloc(bytes);
+    cudaMallocHost(&h_b, bytes);
+    cudaMallocHost(&h_c, bytes);
     
     //Allocating memory on device for device vectors
     cudaMalloc(&d_a,bytes);
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]){
     cudaMemcpy(d_b, h_b, bytes, cudaMemcpyHostToDevice);
 
     //number of threads per thread block (blockSize)
-    int NUM_THREADS = 1 << 10; //1024
+    int NUM_THREADS = 1 << 8; //256
 
     //number of thread blocks in grid (gridSize)
     //pad extra thread block to grid if N isnt perfectly divisible by NUM_THREADS
